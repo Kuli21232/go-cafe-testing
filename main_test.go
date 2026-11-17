@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -58,5 +59,13 @@ func TestCafeCount(t *testing.T) {
 		{count: 1, want: 1},
 		{count: 2, want: 2},
 		{count: 100, want: len(cafeList["moscow"])},
+	}
+
+	handler := http.HandlerFunc(mainHandle)
+	for _, v := range requests {
+		response := httptest.NewRecorder()
+		url := "/cafe?city=moscow&count=" + strconv.Itoa(v.count)
+		req := httptest.NewRequest("GET", url, nil)
+		handler.ServeHTTP(response, req)
 	}
 }
