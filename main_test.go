@@ -48,3 +48,15 @@ func TestCafeWhenOk(t *testing.T) {
 		assert.Equal(t, http.StatusOK, response.Code)
 	}
 }
+
+func TestCafeCount(t *testing.T) {
+	requests := []struct {
+		count int
+		want  int
+	}{
+		{count: 0, want: 0},
+		{count: 1, want: 1},
+		{count: 2, want: 2},
+		{count: 100, want: len(cafeList["moscow"])},
+	}
+}
